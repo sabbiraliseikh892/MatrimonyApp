@@ -1,4 +1,5 @@
-﻿using Matrimony.Application.Features.Auth.ForgotPassword;
+﻿using Matrimony.Application.Features.Auth.EmailVerification;
+using Matrimony.Application.Features.Auth.ForgotPassword;
 using Matrimony.Application.Features.Auth.Login;
 using Matrimony.Application.Features.Auth.RefreshToken;
 using Matrimony.Application.Features.Auth.Register;
@@ -18,5 +19,6 @@ namespace Matrimony.Application.Interfaces.Services
         Task AssignRoleAsync(Guid userId, string roleName);
         Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request);
         Task ResetPasswordAsync(ResetPasswordRequest request);
+        Task VerifyEmailAsync(EmailVerificationRequest request);
     }
 }

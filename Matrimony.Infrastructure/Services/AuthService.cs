@@ -1,4 +1,5 @@
-﻿using Matrimony.Application.Features.Auth.ForgotPassword;
+﻿using Matrimony.Application.Features.Auth.EmailVerification;
+using Matrimony.Application.Features.Auth.ForgotPassword;
 using Matrimony.Application.Features.Auth.Login;
 using Matrimony.Application.Features.Auth.RefreshToken;
 using Matrimony.Application.Features.Auth.Register;
@@ -251,6 +252,48 @@ namespace Matrimony.Infrastructure.Services
             {
                 Message = "If an account with this email exists, a password reset link has been sent."
             };
+        }
+
+        public async Task ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            if (user == null)
+                throw new Exception("Invalid request.");
+
+            // Decode the token because it was URL encoded before sending in email
+            var decodedToken = Uri.UnescapeDataString(request.Token);
+
+            var result = await _userManager.ResetPasswordAsync(
+                user,
+                decodedToken,
+                request.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(
+                    string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
+        }
+        public async Task VerifyEmailAsync(EmailVerificationRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            if (user == null)
+                throw new Exception("Invalid verification request.");
+
+            // Decode the token because it was URL encoded in the email
+            var decodedToken = Uri.UnescapeDataString(request.Token);
+
+            var result = await _userManager.ConfirmEmailAsync(
+                user,
+                decodedToken);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(
+                    string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
         }
     }
 }

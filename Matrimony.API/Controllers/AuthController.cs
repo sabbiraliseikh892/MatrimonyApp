@@ -1,4 +1,5 @@
-﻿using Matrimony.Application.Features.Auth.ForgotPassword;
+﻿using Matrimony.Application.Features.Auth.EmailVerification;
+using Matrimony.Application.Features.Auth.ForgotPassword;
 using Matrimony.Application.Features.Auth.Login;
 using Matrimony.Application.Features.Auth.RefreshToken;
 using Matrimony.Application.Features.Auth.Register;
@@ -55,6 +56,27 @@ namespace Matrimony.API.Controllers
             var response = await _authService.ForgotPasswordAsync(request);
 
             return Ok(response);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            await _authService.ResetPasswordAsync(request);
+
+            return Ok(new
+            {
+                Message = "Password has been reset successfully."
+            });
+        }
+        [HttpPost("verify-email")]
+        public async Task<IActionResult> VerifyEmail(EmailVerificationRequest request)
+        {
+            await _authService.VerifyEmailAsync(request);
+
+            return Ok(new
+            {
+                Message = "Email verified successfully."
+            });
         }
     }
 }
