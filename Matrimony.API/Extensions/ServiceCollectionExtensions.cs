@@ -1,6 +1,7 @@
 ﻿using Matrimony.Application.Interfaces.Repositories;
 using Matrimony.Application.Interfaces.Services;
 using Matrimony.Infrastructure.Authentication;
+using Matrimony.Infrastructure.Email;
 using Matrimony.Infrastructure.Repositories;
 using Matrimony.Infrastructure.Services;
 using Matrimony.Persistence.Contexts;
@@ -25,8 +26,8 @@ namespace Matrimony.API.Extensions
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IJwtService, JwtService>();
-
             return services;
         }
     }
