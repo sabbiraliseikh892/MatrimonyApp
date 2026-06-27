@@ -26,6 +26,7 @@ namespace Matrimony.Infrastructure.Services
         private readonly ApplicationDbContext _context;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
+        private readonly IEmailService _emailService;
 
         public AuthService(
     UserManager<ApplicationUser> userManager,
@@ -33,7 +34,8 @@ namespace Matrimony.Infrastructure.Services
     RoleManager<IdentityRole<Guid>> roleManager,
     IUserRepository userRepository,
     IRefreshTokenRepository refreshTokenRepository,
-    IJwtService jwtService)
+    IJwtService jwtService,
+    IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -41,6 +43,7 @@ namespace Matrimony.Infrastructure.Services
             _userRepository = userRepository;
             _refreshTokenRepository = refreshTokenRepository;
             _jwtService = jwtService;
+            _emailService = emailService;
         }
         public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
         {
@@ -199,6 +202,8 @@ namespace Matrimony.Infrastructure.Services
                     string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
+     
+
         public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
@@ -212,11 +217,35 @@ namespace Matrimony.Infrastructure.Services
                 };
             }
 
-            // Generate ASP.NET Identity password reset token
+            // Generate password reset token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // TODO:
-            // In the next step we will send this token via Email Service.
+            // Encode token for URL
+            var encodedToken = Uri.EscapeDataString(token);
+
+            // Temporary frontend URL
+            var resetLink =
+                $"https://localhost:3000/reset-password?email={user.Email}&token={encodedToken}";
+
+            var body = $@"
+        <h2>Matrimony Password Reset</h2>
+
+        <p>Hello {user.FirstName},</p>
+
+        <p>Please click the link below to reset your password.</p>
+
+        <p>
+            <a href='{resetLink}'>Reset Password</a>
+        </p>
+
+        <p>This link will expire automatically.</p>
+
+        <p>If you didn't request this, please ignore this email.</p>";
+
+            await _emailService.SendEmailAsync(
+                user.Email!,
+                "Reset Password",
+                body);
 
             return new ForgotPasswordResponse
             {

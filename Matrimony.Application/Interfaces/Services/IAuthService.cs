@@ -17,5 +17,6 @@ namespace Matrimony.Application.Interfaces.Services
         Task<RefreshTokenResponse> RefreshTokenAsync(RefreshTokenRequest request);
         Task AssignRoleAsync(Guid userId, string roleName);
         Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request);
+        Task ResetPasswordAsync(ResetPasswordRequest request);
     }
 }
