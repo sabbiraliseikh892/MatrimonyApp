@@ -29,12 +29,19 @@ namespace Matrimony.Infrastructure.Authentication
                 SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(ClaimTypes.Name, user.FirstName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
+{
+    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+    new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+    new Claim(ClaimTypes.Name, user.FirstName),
+    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+    new Claim(
+        JwtRegisteredClaimNames.Iat,
+        DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+        ClaimValueTypes.Integer64)
+};
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],

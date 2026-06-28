@@ -8,6 +8,7 @@ using Matrimony.Application.Interfaces.Services;
 using Matrimony.Domain.Entities;
 using Matrimony.Infrastructure.Authentication;
 using Matrimony.Persistence.Contexts;
+using Matrimony.Shared.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -50,11 +51,11 @@ namespace Matrimony.Infrastructure.Services
         {
             // Check email
             if (await _userRepository.EmailExistsAsync(request.Email))
-                throw new Exception("Email already exists.");
+                throw new BusinessException("Email already exists.");
 
             // Check phone
             if (await _userRepository.PhoneExistsAsync(request.PhoneNumber))
-                throw new Exception("Phone number already exists.");
+                throw new BusinessException("Phone number already exists.");
 
             var user = new ApplicationUser
             {
@@ -73,8 +74,8 @@ namespace Matrimony.Infrastructure.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception(
-                    string.Join(", ", result.Errors.Select(x => x.Description)));
+                throw new BusinessException(
+     string.Join(", ", result.Errors.Select(x => x.Description)));
             }
 
             // Assign default role (we'll create it later)
@@ -93,7 +94,7 @@ namespace Matrimony.Infrastructure.Services
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
-                throw new Exception("Invalid email or password.");
+                throw new UnauthorizedException("Invalid email or password.");
 
             // Verify password
             var result = await _signInManager.CheckPasswordSignInAsync(
@@ -102,7 +103,7 @@ namespace Matrimony.Infrastructure.Services
                 lockoutOnFailure: true);
 
             if (!result.Succeeded)
-                throw new Exception("Invalid email or password.");
+                throw new UnauthorizedException("Invalid email or password.");
 
             var refreshToken = GenerateRefreshToken();
 
@@ -138,13 +139,13 @@ namespace Matrimony.Infrastructure.Services
                 .GetByTokenAsync(request.RefreshToken);
 
             if (existingToken == null)
-                throw new Exception("Invalid refresh token.");
+                throw new UnauthorizedException("Invalid refresh token.");
 
             if (existingToken.IsRevoked)
-                throw new Exception("Refresh token has been revoked.");
+                throw new UnauthorizedException("Refresh token has been revoked.");
 
             if (existingToken.ExpiryDate <= DateTime.UtcNow)
-                throw new Exception("Refresh token has expired.");
+                throw new UnauthorizedException("Refresh token has expired.");
 
             var user = existingToken.User;
 
@@ -176,7 +177,7 @@ namespace Matrimony.Infrastructure.Services
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
             if (user == null)
-                throw new Exception("User not found.");
+                throw new NotFoundException("User not found.");
 
             // Create the role if it doesn't exist
             if (!await _roleManager.RoleExistsAsync(roleName))
@@ -186,8 +187,8 @@ namespace Matrimony.Infrastructure.Services
 
                 if (!createRoleResult.Succeeded)
                 {
-                    throw new Exception(
-                        string.Join(", ", createRoleResult.Errors.Select(e => e.Description)));
+                    throw new BusinessException(
+    string.Join(", ", createRoleResult.Errors.Select(e => e.Description)));
                 }
             }
 
@@ -199,11 +200,11 @@ namespace Matrimony.Infrastructure.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception(
-                    string.Join(", ", result.Errors.Select(e => e.Description)));
+                throw new BusinessException(
+      string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
-     
+
 
         public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request)
         {
@@ -259,7 +260,7 @@ namespace Matrimony.Infrastructure.Services
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
-                throw new Exception("Invalid request.");
+                throw new NotFoundException("User not found.");
 
             // Decode the token because it was URL encoded before sending in email
             var decodedToken = Uri.UnescapeDataString(request.Token);
@@ -271,8 +272,8 @@ namespace Matrimony.Infrastructure.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception(
-                    string.Join(", ", result.Errors.Select(e => e.Description)));
+                throw new BusinessException(
+    string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
         public async Task VerifyEmailAsync(EmailVerificationRequest request)
@@ -280,7 +281,7 @@ namespace Matrimony.Infrastructure.Services
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
-                throw new Exception("Invalid verification request.");
+                throw new NotFoundException("User not found.");
 
             // Decode the token because it was URL encoded in the email
             var decodedToken = Uri.UnescapeDataString(request.Token);
@@ -291,8 +292,8 @@ namespace Matrimony.Infrastructure.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception(
-                    string.Join(", ", result.Errors.Select(e => e.Description)));
+                throw new BusinessException(
+      string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
     }

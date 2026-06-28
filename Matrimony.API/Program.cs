@@ -1,4 +1,5 @@
 using Matrimony.API.Extensions;
+using Matrimony.API.Middlewares;
 using Matrimony.Domain.Entities;
 using Matrimony.Persistence.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -54,6 +55,7 @@ builder.Services
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
