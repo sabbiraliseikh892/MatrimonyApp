@@ -24,6 +24,10 @@ namespace Matrimony.API.Extensions
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IReligionRepository, ReligionRepository>();
+            services.AddScoped<IReligionService, ReligionService>();
+            services.AddScoped<ICasteRepository, CasteRepository>();
+            services.AddScoped<ICasteService, CasteService>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailService, EmailService>();

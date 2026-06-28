@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Matrimony.Domain.Entities.Masters;
 
 namespace Matrimony.Persistence.Contexts
 {
@@ -25,6 +26,8 @@ namespace Matrimony.Persistence.Contexts
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public DbSet<OtpVerification> OtpVerifications { get; set; }
+        public DbSet<ReligionMaster> ReligionMasters { get; set; }
+        public DbSet<CasteMaster> CasteMasters { get; set; }
         protected override void OnModelCreating(
         ModelBuilder builder)
         {

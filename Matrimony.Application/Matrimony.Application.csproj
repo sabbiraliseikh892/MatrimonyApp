@@ -21,7 +21,6 @@
     <Folder Include="Features\Chat\" />
     <Folder Include="Features\Payment\" />
     <Folder Include="Features\Search\" />
-    <Folder Include="Features\Profile\" />
     <Folder Include="Mappings\" />
     <Folder Include="Validators\" />
   </ItemGroup>
