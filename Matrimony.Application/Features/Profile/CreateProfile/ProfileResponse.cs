@@ -1,45 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Matrimony.Application.Features.Profile.CreateProfile
 {
-    public class CreateProfileRequest
+    public class ProfileResponse
     {
+        public Guid Id { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string ProfileId { get; set; } = string.Empty;
+
         public DateTime DateOfBirth { get; set; }
 
-        [Range(4, 7)]
         public int HeightFeet { get; set; }
 
-        [Range(0, 11)]
         public int HeightInches { get; set; }
 
-        [Range(20, 250)]
         public decimal Weight { get; set; }
 
         public Guid ReligionId { get; set; }
 
+        public string Religion { get; set; } = string.Empty;
+
         public Guid CasteId { get; set; }
+
+        public string Caste { get; set; } = string.Empty;
 
         public Guid MotherTongueId { get; set; }
 
+        public string MotherTongue { get; set; } = string.Empty;
+
         public Guid EducationId { get; set; }
+
+        public string Education { get; set; } = string.Empty;
 
         public Guid OccupationId { get; set; }
 
+        public string Occupation { get; set; } = string.Empty;
+
         public Guid CountryId { get; set; }
+
+        public string Country { get; set; } = string.Empty;
 
         public Guid StateId { get; set; }
 
+        public string State { get; set; } = string.Empty;
+
         public Guid CityId { get; set; }
 
-        [Range(0, 100000000)]
+        public string City { get; set; } = string.Empty;
+
         public decimal AnnualIncome { get; set; }
 
-        [MaxLength(2000)]
         public string AboutMe { get; set; } = string.Empty;
     }
 }

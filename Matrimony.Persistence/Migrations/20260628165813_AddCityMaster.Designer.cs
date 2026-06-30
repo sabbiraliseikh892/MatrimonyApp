@@ -4,6 +4,7 @@ using Matrimony.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Matrimony.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260628165813_AddCityMaster")]
+    partial class AddCityMaster
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,14 +548,17 @@ namespace Matrimony.Persistence.Migrations
                     b.Property<decimal>("AnnualIncome")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("CasteId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Caste")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -560,33 +566,36 @@ namespace Matrimony.Persistence.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EducationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HeightFeet")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HeightInches")
+                    b.Property<int>("Height")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("MotherTongueId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OccupationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ProfileId")
+                    b.Property<string>("MotherTongue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ReligionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Occupation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StateId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ProfileId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Religion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -599,26 +608,18 @@ namespace Matrimony.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CasteId");
+                    b.HasIndex("Caste");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("City");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("ProfileId");
 
-                    b.HasIndex("EducationId");
-
-                    b.HasIndex("MotherTongueId");
-
-                    b.HasIndex("OccupationId");
-
-                    b.HasIndex("ReligionId");
-
-                    b.HasIndex("StateId");
+                    b.HasIndex("Religion");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -820,75 +821,11 @@ namespace Matrimony.Persistence.Migrations
 
             modelBuilder.Entity("Matrimony.Domain.Entities.UserProfile", b =>
                 {
-                    b.HasOne("Matrimony.Domain.Entities.Masters.CasteMaster", "Caste")
-                        .WithMany()
-                        .HasForeignKey("CasteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.CityMaster", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.CountryMaster", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.EducationMaster", "Education")
-                        .WithMany()
-                        .HasForeignKey("EducationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.MotherTongueMaster", "MotherTongue")
-                        .WithMany()
-                        .HasForeignKey("MotherTongueId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.OccupationMaster", "Occupation")
-                        .WithMany()
-                        .HasForeignKey("OccupationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.ReligionMaster", "Religion")
-                        .WithMany()
-                        .HasForeignKey("ReligionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.Masters.StateMaster", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "User")
                         .WithOne("Profile")
                         .HasForeignKey("Matrimony.Domain.Entities.UserProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Caste");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("Education");
-
-                    b.Navigation("MotherTongue");
-
-                    b.Navigation("Occupation");
-
-                    b.Navigation("Religion");
-
-                    b.Navigation("State");
 
                     b.Navigation("User");
                 });

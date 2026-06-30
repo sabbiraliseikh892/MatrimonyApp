@@ -19,15 +19,15 @@ namespace Matrimony.Domain.Entities
 
         public int MaxHeight { get; set; }
 
-        public string Religion { get; set; }
+        public Guid ReligionId { get; set; }
 
         public string Caste { get; set; }
 
-        public string Education { get; set; }
+        public Guid EducationId { get; set; }
 
         public string Occupation { get; set; }
 
-        public string Country { get; set; }
+        public Guid CountryId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
     }

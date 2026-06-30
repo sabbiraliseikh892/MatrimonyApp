@@ -28,6 +28,23 @@ namespace Matrimony.API.Extensions
             services.AddScoped<IReligionService, ReligionService>();
             services.AddScoped<ICasteRepository, CasteRepository>();
             services.AddScoped<ICasteService, CasteService>();
+            services.AddScoped<IMotherTongueRepository, MotherTongueRepository>();
+            services.AddScoped<IMotherTongueService, MotherTongueService>();
+            services.AddScoped<IEducationService, EducationService>();
+            services.AddScoped<IEducationRepository, EducationRepository>();
+            services.AddScoped<IOccupationRepository, OccupationRepository>();
+            services.AddScoped<IOccupationService, OccupationService>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IStateRepository, StateRepository>();
+            services.AddScoped<IStateService, StateService>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
+
+            services.AddScoped<IProfilePhotoRepository, ProfilePhotoRepository>();
+            services.AddScoped<IProfilePhotoService, ProfilePhotoService>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailService, EmailService>();

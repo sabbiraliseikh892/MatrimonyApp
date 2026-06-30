@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Matrimony.Application.Features.Profile.CreateProfile
 {
-    public class CreateProfileRequest
+    public class UpdateProfileRequest
     {
+        public Guid Id { get; set; }
+
         public DateTime DateOfBirth { get; set; }
 
         [Range(4, 7)]
