@@ -9,38 +9,23 @@ using System.Threading.Tasks;
 
 namespace Matrimony.Persistence.Configurations
 {
-    public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
+    public class PartnerPreferenceConfiguration
+        : IEntityTypeConfiguration<PartnerPreference>
     {
-        public void Configure(EntityTypeBuilder<UserProfile> builder)
+        public void Configure(EntityTypeBuilder<PartnerPreference> builder)
         {
-            builder.ToTable("UserProfiles");
-
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.ProfileId)
-                .HasMaxLength(20);
-
-            builder.Property(x => x.AnnualIncome)
+            builder.Property(x => x.MinAnnualIncome)
                 .HasPrecision(18, 2);
 
-            builder.HasIndex(x => x.ProfileId);
+            builder.Property(x => x.MaxAnnualIncome)
+                .HasPrecision(18, 2);
 
-            builder.HasIndex(x => x.UserId).IsUnique();
-
-            builder.HasIndex(x => x.CountryId);
-            builder.HasIndex(x => x.StateId);
-            builder.HasIndex(x => x.CityId);
-
-            builder.HasIndex(x => x.ReligionId);
-            builder.HasIndex(x => x.CasteId);
-            builder.HasIndex(x => x.MotherTongueId);
-            builder.HasIndex(x => x.EducationId);
-            builder.HasIndex(x => x.OccupationId);
-
-            // User (One-to-One)
+            // User
             builder.HasOne(x => x.User)
-                .WithOne(x => x.Profile)
-                .HasForeignKey<UserProfile>(x => x.UserId)
+                .WithOne()
+                .HasForeignKey<PartnerPreference>(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Religion
@@ -90,13 +75,6 @@ namespace Matrimony.Persistence.Configurations
                 .WithMany()
                 .HasForeignKey(x => x.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // Photos
-            builder.HasMany(x => x.Photos)
-                .WithOne(x => x.UserProfile)
-                .HasForeignKey(x => x.UserProfileId)
-                .OnDelete(DeleteBehavior.Cascade);
-            
         }
     }
 }

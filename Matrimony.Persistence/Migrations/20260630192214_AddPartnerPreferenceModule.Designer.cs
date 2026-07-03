@@ -4,6 +4,7 @@ using Matrimony.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Matrimony.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260630192214_AddPartnerPreferenceModule")]
+    partial class AddPartnerPreferenceModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -576,55 +579,6 @@ namespace Matrimony.Persistence.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Matrimony.Domain.Entities.UserInterest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("FromUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("InitialMessage")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("RespondedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ResponseReason")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ToUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedAt");
-
-                    b.HasIndex("FromUserId", "Status");
-
-                    b.HasIndex("FromUserId", "ToUserId")
-                        .IsUnique();
-
-                    b.HasIndex("ToUserId", "Status");
-
-                    b.ToTable("UserInterests", (string)null);
-                });
-
             modelBuilder.Entity("Matrimony.Domain.Entities.UserProfile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -971,25 +925,6 @@ namespace Matrimony.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Matrimony.Domain.Entities.UserInterest", b =>
-                {
-                    b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "FromUser")
-                        .WithMany("SentInterests")
-                        .HasForeignKey("FromUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "ToUser")
-                        .WithMany("ReceivedInterests")
-                        .HasForeignKey("ToUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("FromUser");
-
-                    b.Navigation("ToUser");
-                });
-
             modelBuilder.Entity("Matrimony.Domain.Entities.UserProfile", b =>
                 {
                     b.HasOne("Matrimony.Domain.Entities.Masters.CasteMaster", "Caste")
@@ -1121,11 +1056,7 @@ namespace Matrimony.Persistence.Migrations
                     b.Navigation("Profile")
                         .IsRequired();
 
-                    b.Navigation("ReceivedInterests");
-
                     b.Navigation("RefreshTokens");
-
-                    b.Navigation("SentInterests");
                 });
 
             modelBuilder.Entity("Matrimony.Domain.Entities.Masters.CountryMaster", b =>

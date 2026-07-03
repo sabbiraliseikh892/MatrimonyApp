@@ -34,78 +34,13 @@ namespace Matrimony.Persistence.Contexts
         public DbSet<CountryMaster> CountryMasters { get; set; }
         public DbSet<StateMaster> StateMasters { get; set; }
         public DbSet<CityMaster> CityMasters { get; set; }
+        public DbSet<UserInterest> UserInterests { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            // ApplicationUser ↔ UserProfile (One-to-One)
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.User)
-                .WithOne(x => x.Profile)
-                .HasForeignKey<UserProfile>(x => x.UserId);
-
-            // Religion
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.Religion)
-                .WithMany()
-                .HasForeignKey(x => x.ReligionId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Caste
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.Caste)
-                .WithMany()
-                .HasForeignKey(x => x.CasteId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Mother Tongue
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.MotherTongue)
-                .WithMany()
-                .HasForeignKey(x => x.MotherTongueId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Education
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.Education)
-                .WithMany()
-                .HasForeignKey(x => x.EducationId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Occupation
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.Occupation)
-                .WithMany()
-                .HasForeignKey(x => x.OccupationId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Country
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.Country)
-                .WithMany()
-                .HasForeignKey(x => x.CountryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // State
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.State)
-                .WithMany()
-                .HasForeignKey(x => x.StateId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // City
-            builder.Entity<UserProfile>()
-                .HasOne(x => x.City)
-                .WithMany()
-                .HasForeignKey(x => x.CityId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // ProfilePhoto
-            builder.Entity<ProfilePhoto>()
-                .HasOne(x => x.UserProfile)
-                .WithMany(x => x.Photos)
-                .HasForeignKey(x => x.UserProfileId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.ApplyConfigurationsFromAssembly(
+                typeof(ApplicationDbContext).Assembly);
         }
     }
 }

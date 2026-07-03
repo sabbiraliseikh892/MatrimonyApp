@@ -28,5 +28,10 @@ namespace Matrimony.Domain.Entities
         public virtual UserProfile Profile { get; set; }
 
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
+        public virtual ICollection<UserInterest> SentInterests { get; set; }
+    = new List<UserInterest>();
+
+        public virtual ICollection<UserInterest> ReceivedInterests { get; set; }
+            = new List<UserInterest>();
     }
 }

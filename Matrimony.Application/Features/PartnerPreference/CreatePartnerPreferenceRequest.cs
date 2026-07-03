@@ -1,17 +1,13 @@
-﻿using Matrimony.Domain.Common;
-using Matrimony.Domain.Entities.Masters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Matrimony.Domain.Entities
+namespace Matrimony.Application.Features.PartnerPreference
 {
-    public class PartnerPreference :BaseEntity
+    public class CreatePartnerPreferenceRequest
     {
-        public Guid UserId { get; set; }
-
         // Age
         public int MinAge { get; set; }
 
@@ -31,7 +27,7 @@ namespace Matrimony.Domain.Entities
 
         public decimal? MaxAnnualIncome { get; set; }
 
-        // Master References (Nullable = No Preference)
+        // Master Preferences
         public Guid? ReligionId { get; set; }
 
         public Guid? CasteId { get; set; }
@@ -48,30 +44,11 @@ namespace Matrimony.Domain.Entities
 
         public Guid? CityId { get; set; }
 
-        // Marital Status
+        // Marital Preferences
         public bool AcceptDivorced { get; set; }
 
         public bool AcceptWidowed { get; set; }
 
         public bool AcceptWithChildren { get; set; }
-
-        // Navigation Properties
-        public virtual ApplicationUser User { get; set; } = null!;
-
-        public virtual ReligionMaster? Religion { get; set; }
-
-        public virtual CasteMaster? Caste { get; set; }
-
-        public virtual MotherTongueMaster? MotherTongue { get; set; }
-
-        public virtual EducationMaster? Education { get; set; }
-
-        public virtual OccupationMaster? Occupation { get; set; }
-
-        public virtual CountryMaster? Country { get; set; }
-
-        public virtual StateMaster? State { get; set; }
-
-        public virtual CityMaster? City { get; set; }
     }
 }

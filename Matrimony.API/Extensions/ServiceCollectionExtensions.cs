@@ -1,6 +1,9 @@
-﻿using Matrimony.Application.Interfaces.Repositories;
+﻿using Matrimony.Application.Interfaces.Dapper;
+using Matrimony.Application.Interfaces.Repositories;
 using Matrimony.Application.Interfaces.Services;
 using Matrimony.Infrastructure.Authentication;
+using Matrimony.Infrastructure.Dapper;
+using Matrimony.Infrastructure.Dapper.Sql;
 using Matrimony.Infrastructure.Email;
 using Matrimony.Infrastructure.Repositories;
 using Matrimony.Infrastructure.Services;
@@ -22,6 +25,7 @@ namespace Matrimony.API.Extensions
                     configuration.GetConnectionString(
                         "DefaultConnection")));
 
+            services.AddSingleton<DapperContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IReligionRepository, ReligionRepository>();
@@ -42,9 +46,16 @@ namespace Matrimony.API.Extensions
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             services.AddScoped<IUserProfileService, UserProfileService>();
-
+            services.AddScoped<IPartnerPreferenceRepository, PartnerPreferenceRepository>();
+            services.AddScoped<IPartnerPreferenceService, PartnerPreferenceService>();
+            services.AddScoped<ISearchReadRepository, SearchReadRepository>();
+            services.AddScoped<ISearchService, SearchService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<SearchProfileSqlBuilder>();
             services.AddScoped<IProfilePhotoRepository, ProfilePhotoRepository>();
             services.AddScoped<IProfilePhotoService, ProfilePhotoService>();
+            services.AddScoped<IUserInterestRepository, UserInterestRepository>();
+            services.AddScoped<IUserInterestService, UserInterestService>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailService, EmailService>();
