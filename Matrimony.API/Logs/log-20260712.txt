@@ -1,0 +1,41 @@
+2026-07-12 22:47:55.737 +05:30 [WRN] No store type was specified for the decimal property 'Weight' on entity type 'UserProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-12 22:47:56.070 +05:30 [WRN] No store type was specified for the decimal property 'Weight' on entity type 'UserProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-12 22:48:15.574 +05:30 [WRN] No store type was specified for the decimal property 'Weight' on entity type 'UserProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-12 22:48:16.511 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-12 22:48:16.547 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-12 22:48:16.548 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-12 22:48:16.549 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-12 22:48:16.608 +05:30 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-12 22:48:16.622 +05:30 [INF] Applying migration '20260712171757_AddNotificationModule'.
+2026-07-12 22:48:16.754 +05:30 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Notifications] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    [Title] nvarchar(200) NOT NULL,
+    [Message] nvarchar(1000) NOT NULL,
+    [Type] nvarchar(100) NOT NULL,
+    [IsRead] bit NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [ReadAt] datetime2 NULL,
+    [Data] nvarchar(max) NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Notifications] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Notifications_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2026-07-12 22:48:16.761 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Notifications_CreatedAt] ON [Notifications] ([CreatedAt]);
+2026-07-12 22:48:16.763 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Notifications_IsRead] ON [Notifications] ([IsRead]);
+2026-07-12 22:48:16.765 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Notifications_UserId] ON [Notifications] ([UserId]);
+2026-07-12 22:48:16.786 +05:30 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260712171757_AddNotificationModule', N'8.0.10');

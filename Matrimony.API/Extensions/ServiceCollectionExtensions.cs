@@ -9,6 +9,8 @@ using Matrimony.Infrastructure.Dapper;
 using Matrimony.Infrastructure.Dapper.Sql;
 using Matrimony.Infrastructure.Email;
 using Matrimony.Infrastructure.Persistence;
+using Matrimony.Infrastructure.Realtime.Managers;
+using Matrimony.Infrastructure.Realtime.Services;
 using Matrimony.Infrastructure.Repositories;
 using Matrimony.Infrastructure.Services;
 using Matrimony.Persistence.Contexts;
@@ -30,6 +32,17 @@ namespace Matrimony.API.Extensions
                         "DefaultConnection")));
 
             services.AddSingleton<DapperContext>();
+            // SignalR
+            services.AddSignalR();
+
+            // Connection Manager
+            services.AddSingleton<UserConnectionManager>();
+
+
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IReligionRepository, ReligionRepository>();
@@ -68,10 +81,11 @@ namespace Matrimony.API.Extensions
             services.AddScoped<RecommendationSqlBuilder>();
             services.AddScoped<IRecommendationRepository, RecommendationRepository>();
             services.AddScoped<IRecommendationService, RecommendationService>();
+            services.AddScoped< INotificationRepository,NotificationRepository>();
+            // Notification Service
+            services.AddScoped<INotificationService, NotificationService>();
 
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IJwtService, JwtService>();
+           
             return services;
         }
     }

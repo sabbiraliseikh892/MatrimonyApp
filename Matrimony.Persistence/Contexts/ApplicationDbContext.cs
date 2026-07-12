@@ -37,6 +37,7 @@ namespace Matrimony.Persistence.Contexts
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<UserFavorite> UserFavorites { get; set; }
         public DbSet<UserProfileView> UserProfileViews { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

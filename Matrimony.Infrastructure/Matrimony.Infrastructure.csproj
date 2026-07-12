@@ -31,8 +31,8 @@
 
   <ItemGroup>
     <Folder Include="Cache\" />
-    <Folder Include="SignalR\" />
     <Folder Include="Payment\" />
+    <Folder Include="SignalR\" />
     <Folder Include="SMS\" />
   </ItemGroup>
 

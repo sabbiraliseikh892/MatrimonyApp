@@ -1,8 +1,10 @@
 using FluentValidation;
 using Matrimony.API.Extensions;
+
 using Matrimony.API.Middlewares;
 using Matrimony.Application.Validators;
 using Matrimony.Domain.Entities;
+using Matrimony.Infrastructure.Realtime.Hubs;
 using Matrimony.Persistence.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -66,7 +68,7 @@ builder.Services
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
-
+builder.Services.AddSignalR();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -87,5 +89,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/hubs/notification");
 
 app.Run();

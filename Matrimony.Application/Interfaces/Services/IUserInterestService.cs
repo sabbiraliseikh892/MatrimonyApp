@@ -9,6 +9,7 @@ namespace Matrimony.Application.Interfaces.Services
 {
     public interface IUserInterestService
     {
+        
         Task SendInterestAsync(
             Guid currentUserId,
             CreateUserInterestRequest request);

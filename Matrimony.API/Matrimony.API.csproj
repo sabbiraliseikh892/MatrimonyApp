@@ -33,6 +33,7 @@
   <ItemGroup>
     <Folder Include="Configurations\" />
     <Folder Include="Filters\" />
+    <Folder Include="Hubs\" />
     <Folder Include="wwwroot\uploads\profile\" />
   </ItemGroup>
 

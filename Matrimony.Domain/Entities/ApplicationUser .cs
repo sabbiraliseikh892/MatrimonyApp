@@ -43,5 +43,6 @@ namespace Matrimony.Domain.Entities
 
         public virtual ICollection<UserProfileView> ViewedByUsers { get; set; }
             = new List<UserProfileView>();
+        public ICollection<Notification> Notifications { get; set;} = new List<Notification>();
     }
 }
