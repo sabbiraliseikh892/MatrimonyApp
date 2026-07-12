@@ -9,9 +9,9 @@ namespace Matrimony.Application.Interfaces.Repositories
 {
     public interface IUserProfileRepository
     {
-        Task<UserProfile?> GetByUserIdAsync(Guid userId);
+        Task<UserProfile?> GetProfileByUserIdAsync(Guid userId);
 
-        Task<UserProfile?> GetByIdAsync(Guid id);
+        Task<UserProfile?> GetProfileByIdAsync(Guid id);
 
         Task<List<UserProfile>> GetAllAsync();
 

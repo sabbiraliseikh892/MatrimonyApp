@@ -1,0 +1,40 @@
+2026-07-10 00:14:31.891 +05:30 [WRN] No store type was specified for the decimal property 'Weight' on entity type 'UserProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-10 00:14:32.421 +05:30 [WRN] No store type was specified for the decimal property 'Weight' on entity type 'UserProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-10 00:16:01.442 +05:30 [WRN] No store type was specified for the decimal property 'Weight' on entity type 'UserProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-10 00:16:02.788 +05:30 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-10 00:16:02.842 +05:30 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-10 00:16:02.844 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-10 00:16:02.845 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-10 00:16:02.937 +05:30 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-10 00:16:02.956 +05:30 [INF] Applying migration '20260709184437_AddUserProfileView'.
+2026-07-10 00:16:03.102 +05:30 [INF] Executed DbCommand (46ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [UserProfileViews] (
+    [Id] uniqueidentifier NOT NULL,
+    [ViewerUserId] uniqueidentifier NOT NULL,
+    [ViewedUserId] uniqueidentifier NOT NULL,
+    [ViewedAt] datetime2 NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_UserProfileViews] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_UserProfileViews_AspNetUsers_ViewedUserId] FOREIGN KEY ([ViewedUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_UserProfileViews_AspNetUsers_ViewerUserId] FOREIGN KEY ([ViewerUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+);
+2026-07-10 00:16:03.112 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_UserProfileViews_ViewedAt] ON [UserProfileViews] ([ViewedAt]);
+2026-07-10 00:16:03.114 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_UserProfileViews_ViewedUserId] ON [UserProfileViews] ([ViewedUserId]);
+2026-07-10 00:16:03.117 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_UserProfileViews_ViewerUserId] ON [UserProfileViews] ([ViewerUserId]);
+2026-07-10 00:16:03.119 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_UserProfileViews_ViewerUserId_ViewedUserId] ON [UserProfileViews] ([ViewerUserId], [ViewedUserId]);
+2026-07-10 00:16:03.137 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260709184437_AddUserProfileView', N'8.0.10');

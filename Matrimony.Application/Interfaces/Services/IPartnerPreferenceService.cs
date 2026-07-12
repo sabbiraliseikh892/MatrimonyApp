@@ -16,5 +16,6 @@ namespace Matrimony.Application.Interfaces.Services
         Task<PartnerPreferenceResponse?> GetMyPreferenceAsync(Guid userId);
 
         Task DeleteAsync(Guid userId);
+       
     }
 }

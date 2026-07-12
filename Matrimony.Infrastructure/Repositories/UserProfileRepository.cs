@@ -33,7 +33,7 @@ namespace Matrimony.Infrastructure.Repositories
                 .Include(x => x.Photos)
                 .ToListAsync();
         }
-        public async Task<UserProfile?> GetByIdAsync(Guid id)
+        public async Task<UserProfile?> GetProfileByIdAsync(Guid id)
         {
             return await _context.UserProfiles
                 .Include(x => x.User)
@@ -48,7 +48,7 @@ namespace Matrimony.Infrastructure.Repositories
                 .Include(x => x.Photos)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<UserProfile?> GetByUserIdAsync(Guid userId)
+        public async Task<UserProfile?> GetProfileByUserIdAsync(Guid userId)
         {
             return await _context.UserProfiles
                 .Include(x => x.User)

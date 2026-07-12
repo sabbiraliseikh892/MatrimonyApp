@@ -1,10 +1,14 @@
-﻿using Matrimony.Application.Interfaces.Dapper;
+﻿using AutoMapper;
+using Matrimony.Application.Interfaces.Dapper;
+using Matrimony.Application.Interfaces.Persistence;
 using Matrimony.Application.Interfaces.Repositories;
 using Matrimony.Application.Interfaces.Services;
+using Matrimony.Application.Mappings;
 using Matrimony.Infrastructure.Authentication;
 using Matrimony.Infrastructure.Dapper;
 using Matrimony.Infrastructure.Dapper.Sql;
 using Matrimony.Infrastructure.Email;
+using Matrimony.Infrastructure.Persistence;
 using Matrimony.Infrastructure.Repositories;
 using Matrimony.Infrastructure.Services;
 using Matrimony.Persistence.Contexts;
@@ -56,6 +60,14 @@ namespace Matrimony.API.Extensions
             services.AddScoped<IProfilePhotoService, ProfilePhotoService>();
             services.AddScoped<IUserInterestRepository, UserInterestRepository>();
             services.AddScoped<IUserInterestService, UserInterestService>();
+            services.AddScoped<IUserFavoriteRepository, UserFavoriteRepository>();
+            services.AddScoped<IUserFavoriteService, UserFavoriteService>();
+            services.AddAutoMapper(typeof(UserProfileMappingProfile).Assembly);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserProfileViewRepository, UserProfileViewRepository>();
+            services.AddScoped<RecommendationSqlBuilder>();
+            services.AddScoped<IRecommendationRepository, RecommendationRepository>();
+            services.AddScoped<IRecommendationService, RecommendationService>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailService, EmailService>();

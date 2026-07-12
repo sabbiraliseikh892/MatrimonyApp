@@ -11,9 +11,9 @@ namespace Matrimony.Application.Interfaces.Services
     {
         Task<List<ProfileResponse>> GetAllAsync();
 
-        Task<ProfileResponse?> GetByIdAsync(Guid id);
+        Task<ProfileResponse?> GetProfileByIdAsync(Guid id);
 
-        Task<ProfileResponse?> GetByUserIdAsync(Guid userId);
+        Task<ProfileResponse?> GetProfileByUserIdAsync(Guid userId);
 
         Task CreateAsync(Guid userId, CreateProfileRequest request);
 

@@ -42,7 +42,7 @@ namespace Matrimony.Infrastructure.Services
                 throw new Exception("User not found.");
             }
             var senderProfile =
-    await _profileRepository.GetByUserIdAsync(currentUserId);
+    await _profileRepository.GetProfileByUserIdAsync(currentUserId);
 
             if (senderProfile == null)
             {
@@ -50,7 +50,7 @@ namespace Matrimony.Infrastructure.Services
                     "Complete your profile before sending interests.");
             }
             var receiverProfile =
-    await _profileRepository.GetByUserIdAsync(request.ToUserId);
+    await _profileRepository.GetProfileByUserIdAsync(request.ToUserId);
 
             if (receiverProfile == null)
             {

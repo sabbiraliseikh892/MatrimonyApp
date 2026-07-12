@@ -1,13 +1,26 @@
+using FluentValidation;
 using Matrimony.API.Extensions;
 using Matrimony.API.Middlewares;
+using Matrimony.Application.Validators;
 using Matrimony.Domain.Entities;
 using Matrimony.Persistence.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File(
+        "Logs/log-.txt",
+        rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 // Register Persistence
 builder.Services.AddPersistence(builder.Configuration);
@@ -29,6 +42,8 @@ builder.Services
     .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
+builder.Services.AddValidatorsFromAssembly(
+    typeof(CreateUserFavoriteRequestValidator).Assembly);
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -55,7 +70,8 @@ builder.Services
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

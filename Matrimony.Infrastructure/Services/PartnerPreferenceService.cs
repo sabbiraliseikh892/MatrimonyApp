@@ -2,6 +2,7 @@
 using Matrimony.Application.Interfaces.Repositories;
 using Matrimony.Application.Interfaces.Services;
 using Matrimony.Domain.Entities;
+using Matrimony.Infrastructure.Repositories;
 using Matrimony.Shared.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -143,5 +144,6 @@ namespace Matrimony.Infrastructure.Services
 
             await _repository.DeleteAsync(preference);
         }
+       
     }
 }

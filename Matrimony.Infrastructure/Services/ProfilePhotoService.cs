@@ -28,7 +28,7 @@ namespace Matrimony.Infrastructure.Services
         }
         public async Task UploadAsync(Guid userId, UploadProfilePhotoRequest request)
         {
-            var profile = await _profileRepository.GetByUserIdAsync(userId);
+            var profile = await _profileRepository.GetProfileByUserIdAsync(userId);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
@@ -94,7 +94,7 @@ namespace Matrimony.Infrastructure.Services
         }
         public async Task<List<ProfilePhotoResponse>> GetMyPhotosAsync(Guid userId)
         {
-            var profile = await _profileRepository.GetByUserIdAsync(userId);
+            var profile = await _profileRepository.GetProfileByUserIdAsync(userId);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
@@ -112,7 +112,7 @@ namespace Matrimony.Infrastructure.Services
         }
         public async Task SetPrimaryAsync(Guid userId, Guid photoId)
         {
-            var profile = await _profileRepository.GetByUserIdAsync(userId);
+            var profile = await _profileRepository.GetProfileByUserIdAsync(userId);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
@@ -140,7 +140,7 @@ namespace Matrimony.Infrastructure.Services
         }
         public async Task DeleteAsync(Guid userId, Guid photoId)
         {
-            var profile = await _profileRepository.GetByUserIdAsync(userId);
+            var profile = await _profileRepository.GetProfileByUserIdAsync(userId);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");

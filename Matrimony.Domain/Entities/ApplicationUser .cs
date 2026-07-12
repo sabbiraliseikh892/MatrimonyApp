@@ -33,5 +33,15 @@ namespace Matrimony.Domain.Entities
 
         public virtual ICollection<UserInterest> ReceivedInterests { get; set; }
             = new List<UserInterest>();
+        public virtual ICollection<UserFavorite> Favorites { get; set; }
+    = new List<UserFavorite>();
+
+        public virtual ICollection<UserFavorite> FavoritedByUsers { get; set; }
+            = new List<UserFavorite>();
+        public virtual ICollection<UserProfileView> ViewedProfiles { get; set; }
+    = new List<UserProfileView>();
+
+        public virtual ICollection<UserProfileView> ViewedByUsers { get; set; }
+            = new List<UserProfileView>();
     }
 }

@@ -42,7 +42,7 @@ up.UserId <> @CurrentUserId
             if (request.ReligionId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.ReligionId = @ReligionId");
+                    " AND up.ReligionId = @ReligionId");
 
                 parameters.Add(
                     "@ReligionId",
@@ -56,7 +56,7 @@ up.UserId <> @CurrentUserId
             if (request.CasteId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.CasteId = @CasteId");
+                    " AND up.CasteId = @CasteId");
 
                 parameters.Add(
                     "@CasteId",
@@ -70,7 +70,7 @@ up.UserId <> @CurrentUserId
             if (request.MotherTongueId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.MotherTongueId=@MotherTongueId");
+                    " AND up.MotherTongueId=@MotherTongueId");
 
                 parameters.Add(
                     "@MotherTongueId",
@@ -84,7 +84,7 @@ up.UserId <> @CurrentUserId
             if (request.EducationId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.EducationId=@EducationId");
+                    " AND up.EducationId=@EducationId");
 
                 parameters.Add(
                     "@EducationId",
@@ -98,7 +98,7 @@ up.UserId <> @CurrentUserId
             if (request.OccupationId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.OccupationId=@OccupationId");
+                    " AND up.OccupationId=@OccupationId");
 
                 parameters.Add(
                     "@OccupationId",
@@ -112,7 +112,7 @@ up.UserId <> @CurrentUserId
             if (request.CountryId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.CountryId=@CountryId");
+                    " AND up.CountryId=@CountryId");
 
                 parameters.Add(
                     "@CountryId",
@@ -126,7 +126,7 @@ up.UserId <> @CurrentUserId
             if (request.StateId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.StateId=@StateId");
+                    " AND up.StateId=@StateId");
 
                 parameters.Add(
                     "@StateId",
@@ -140,7 +140,7 @@ up.UserId <> @CurrentUserId
             if (request.CityId.HasValue)
             {
                 whereClause.AppendLine(
-                    "AND up.CityId=@CityId");
+                    " AND up.CityId=@CityId");
 
                 parameters.Add(
                     "@CityId",

@@ -35,6 +35,8 @@ namespace Matrimony.Persistence.Contexts
         public DbSet<StateMaster> StateMasters { get; set; }
         public DbSet<CityMaster> CityMasters { get; set; }
         public DbSet<UserInterest> UserInterests { get; set; }
+        public DbSet<UserFavorite> UserFavorites { get; set; }
+        public DbSet<UserProfileView> UserProfileViews { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

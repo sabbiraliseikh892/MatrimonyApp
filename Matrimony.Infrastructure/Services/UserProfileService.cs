@@ -24,18 +24,18 @@ namespace Matrimony.Infrastructure.Services
 
             return profiles.Select(MapProfileResponse).ToList();
         }
-        public async Task<ProfileResponse?> GetByIdAsync(Guid id)
+        public async Task<ProfileResponse?> GetProfileByIdAsync(Guid id)
         {
-            var profile = await _profileRepository.GetByIdAsync(id);
+            var profile = await _profileRepository.GetProfileByIdAsync(id);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
 
             return MapProfileResponse(profile);
         }
-        public async Task<ProfileResponse?> GetByUserIdAsync(Guid userId)
+        public async Task<ProfileResponse?> GetProfileByUserIdAsync(Guid userId)
         {
-            var profile = await _profileRepository.GetByUserIdAsync(userId);
+            var profile = await _profileRepository.GetProfileByUserIdAsync(userId);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
@@ -73,7 +73,7 @@ namespace Matrimony.Infrastructure.Services
         }
         public async Task UpdateAsync(UpdateProfileRequest request)
         {
-            var profile = await _profileRepository.GetByIdAsync(request.Id);
+            var profile = await _profileRepository.GetProfileByIdAsync(request.Id);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
@@ -100,7 +100,7 @@ namespace Matrimony.Infrastructure.Services
         }
         public async Task DeleteAsync(Guid id)
         {
-            var profile = await _profileRepository.GetByIdAsync(id);
+            var profile = await _profileRepository.GetProfileByIdAsync(id);
 
             if (profile == null)
                 throw new NotFoundException("Profile not found.");

@@ -576,6 +576,41 @@ namespace Matrimony.Persistence.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("Matrimony.Domain.Entities.UserFavorite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FavoriteUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("FavoriteUserId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId", "FavoriteUserId")
+                        .IsUnique();
+
+                    b.ToTable("UserFavorites", (string)null);
+                });
+
             modelBuilder.Entity("Matrimony.Domain.Entities.UserInterest", b =>
                 {
                     b.Property<Guid>("Id")
@@ -716,6 +751,44 @@ namespace Matrimony.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("UserProfiles", (string)null);
+                });
+
+            modelBuilder.Entity("Matrimony.Domain.Entities.UserProfileView", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ViewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ViewedUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ViewerUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ViewedAt");
+
+                    b.HasIndex("ViewedUserId");
+
+                    b.HasIndex("ViewerUserId");
+
+                    b.HasIndex("ViewerUserId", "ViewedUserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfileViews", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -971,6 +1044,25 @@ namespace Matrimony.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Matrimony.Domain.Entities.UserFavorite", b =>
+                {
+                    b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "FavoriteUser")
+                        .WithMany("FavoritedByUsers")
+                        .HasForeignKey("FavoriteUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FavoriteUser");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Matrimony.Domain.Entities.UserInterest", b =>
                 {
                     b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "FromUser")
@@ -1065,6 +1157,25 @@ namespace Matrimony.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Matrimony.Domain.Entities.UserProfileView", b =>
+                {
+                    b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "ViewedUser")
+                        .WithMany("ViewedByUsers")
+                        .HasForeignKey("ViewedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Matrimony.Domain.Entities.ApplicationUser", "ViewerUser")
+                        .WithMany("ViewedProfiles")
+                        .HasForeignKey("ViewerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ViewedUser");
+
+                    b.Navigation("ViewerUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -1118,6 +1229,10 @@ namespace Matrimony.Persistence.Migrations
 
             modelBuilder.Entity("Matrimony.Domain.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("FavoritedByUsers");
+
+                    b.Navigation("Favorites");
+
                     b.Navigation("Profile")
                         .IsRequired();
 
@@ -1126,6 +1241,10 @@ namespace Matrimony.Persistence.Migrations
                     b.Navigation("RefreshTokens");
 
                     b.Navigation("SentInterests");
+
+                    b.Navigation("ViewedByUsers");
+
+                    b.Navigation("ViewedProfiles");
                 });
 
             modelBuilder.Entity("Matrimony.Domain.Entities.Masters.CountryMaster", b =>
