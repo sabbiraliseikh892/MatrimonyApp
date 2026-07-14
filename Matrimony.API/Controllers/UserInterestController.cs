@@ -1,10 +1,12 @@
 ﻿using Matrimony.Application.Features.UserInterests;
 using Matrimony.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Matrimony.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserInterestController : ControllerBase
